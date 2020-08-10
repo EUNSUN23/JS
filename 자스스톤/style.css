@@ -1,0 +1,82 @@
+body {
+  padding-left: 50px;
+}
+
+#rival-deck,
+#rival-hero,
+#rival-cards,
+#my-cards,
+#my-deck,
+#my-hero {
+  text-align: center;
+}
+
+.card {
+  margin-bottom: 10px;
+  display: inline-block;
+  position: relative;
+  width: 70px;
+  height: 95px;
+  border: 1px solid black;
+}
+
+.card-hidden {
+  display: none;
+}
+
+.card-att,
+.card-hp,
+.cost {
+  display: inline-block;
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 15px;
+  border-radius: 50%;
+  bottom: 0;
+  border: 1px solid black;
+}
+.cost {
+  top: 0;
+  right: 0;
+  color: #fff;
+  background: blue;
+}
+
+.card-att {
+  left: 0;
+  background: yellow;
+}
+
+.card-hp {
+  right: 0;
+  background: red;
+  color: #fff;
+}
+
+.card-name {
+  text-align: center;
+  font-size: 12px;
+}
+
+#my,
+#rival {
+  display: inline-block;
+  margin-right: 100px;
+  vertical-align: top;
+}
+
+#my-deck,
+#rival-deck {
+  display: inline-block;
+  vertical-align: bottom;
+  width: 250px;
+}
+
+#my-cost,
+#rival-cost {
+  font-size: 12px;
+}
