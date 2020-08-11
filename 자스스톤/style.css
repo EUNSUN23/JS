@@ -69,6 +69,10 @@ body {
   vertical-align: top;
 }
 
+.turn {
+  border: 1px solid black;
+}
+
 #my-deck,
 #rival-deck {
   display: inline-block;
@@ -77,6 +81,13 @@ body {
 }
 
 #my-cost,
-#rival-cost {
+#rival-cost,
+span {
   font-size: 12px;
+}
+
+#turn-button {
+  float: right;
+  position: relative;
+  top: -24px;
 }
