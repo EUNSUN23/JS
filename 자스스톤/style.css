@@ -10,7 +10,12 @@ body {
 #my-hero {
   text-align: center;
 }
-
+#my-deck,
+#rival-deck {
+  padding-top: 10px;
+  box-sizing: border-box;
+  background: skyblue;
+}
 .card {
   margin-bottom: 10px;
   display: inline-block;
@@ -18,6 +23,7 @@ body {
   width: 70px;
   height: 95px;
   border: 1px solid black;
+  background: white;
 }
 
 .card-hidden {
@@ -90,4 +96,12 @@ span {
   float: right;
   position: relative;
   top: -24px;
+}
+
+.card-selected {
+  border: 2px solid red;
+}
+
+.card-turnover {
+  background-color: gray;
 }
