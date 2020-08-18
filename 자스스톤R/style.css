@@ -1,0 +1,93 @@
+body {
+  padding: 50px;
+}
+
+#my,
+#rival {
+  position: relative;
+
+  padding: 10px;
+  box-sizing: border-box;
+  width: 700px;
+  height: 300px;
+}
+
+.my-deck,
+.rival-deck {
+  position: absolute;
+  background: azure;
+  display: flex;
+  width: 240px;
+  right: 50px;
+  top: 30px;
+  flex-flow: row wrap;
+  justify-content: center;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.my-cost,
+.rival-cost {
+  font-size: 13px;
+}
+
+.card {
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 95px;
+  margin: 4px;
+  border: 1px solid black;
+  background: #fff;
+}
+
+.card .att,
+.card .hp,
+.card .cost {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  font-size: 15px;
+  line-height: 20px;
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
+.card .att {
+  background: gold;
+  left: 1px;
+  bottom: 1px;
+}
+
+.card .hp {
+  background: red;
+  color: #fff;
+  right: 1px;
+  bottom: 1px;
+}
+
+.card .cost {
+  background: green;
+  color: #fff;
+  right: 1px;
+  top: 1px;
+}
+
+.card .selected {
+  border: 2px solid red;
+}
+
+.card .turnover {
+  background: gainsboro;
+}
+
+.turn {
+  background: aqua;
+}
+
+#btn {
+  position: absolute;
+  right: 0;
+  top: 354px;
+}
