@@ -1,0 +1,38 @@
+body {
+  padding: 30px;
+}
+
+#tetris {
+  border-collapse: collapse;
+}
+
+#tetris td {
+  border: 1px solid black;
+  width: 30px;
+  height: 30px;
+}
+
+td.red {
+  background: red;
+}
+td.blue {
+  background: blue;
+}
+td.orange {
+  background: orange;
+}
+td.skyblue {
+  background: skyblue;
+}
+td.yellowgreen {
+  background: yellowgreen;
+}
+td.pink {
+  background: pink;
+}
+td.yellow {
+  background: yellow;
+}
+td.white {
+  background: white;
+}

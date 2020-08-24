@@ -31,6 +31,7 @@ function 랜덤생성() {
       if (!행데이터) {
         //조건문에서 '0'은 '거짓'임. 빈칸임.
         빈칸배열.push([i, j]);
+        console.log(빈칸배열);
       }
     });
   });
@@ -41,8 +42,12 @@ function 랜덤생성() {
     초기화();
   } else {
     var 랜덤칸 = 빈칸배열[Math.floor(Math.random() * 빈칸배열.length)];
-    데이터[랜덤칸[0]][랜덤칸[1]] = 2;
+    if (!데이터[랜덤칸[0]][랜덤칸[1]]) {
+      데이터[랜덤칸[0]][랜덤칸[1]] = 2;
+    }
+
     그리기();
+    console.log(랜덤칸);
   }
 }
 
@@ -67,12 +72,10 @@ function 그리기() {
 window.addEventListener("mousedown", function (이벤트) {
   드래그시작 = true;
   시작좌표 = [이벤트.clientX, 이벤트.clientY];
-  console.log("mousedown", 이벤트, 시작좌표);
 });
 window.addEventListener("mousemove", function (이벤트) {
   if (드래그시작) {
     드래그중 = true;
-    console.log("mousedown", 이벤트);
   }
 });
 window.addEventListener("mouseup", function (이벤트) {
@@ -82,7 +85,7 @@ window.addEventListener("mouseup", function (이벤트) {
     끝좌표 = [이벤트.clientX, 이벤트.clientY];
     var x차이 = 끝좌표[0] - 시작좌표[0];
     var y차이 = 끝좌표[1] - 시작좌표[1];
-    console.log("mousedown", 이벤트, 끝좌표);
+
     if (x차이 < 0 && Math.abs(x차이) / Math.abs(y차이) > 1) {
       방향 = "왼쪽";
     } else if (x차이 > 0 && Math.abs(x차이) / Math.abs(y차이) > 1) {
@@ -92,39 +95,11 @@ window.addEventListener("mouseup", function (이벤트) {
     } else if (y차이 > 0 && Math.abs(x차이) / Math.abs(y차이) < 1) {
       방향 = "아래";
     }
-    console.log(끝좌표, 시작좌표);
-    console.log(Math.abs(x차이) / Math.abs(y차이));
-    console.log(방향);
   }
   드래그시작 = false;
   드래그중 = false;
-
   switch (방향) {
     case "왼쪽":
-      var 새데이터 = [[], [], [], []];
-      데이터.forEach(function (열데이터, i) {
-        열데이터.forEach(function (행데이터, j) {
-          if (행데이터) {
-            if (새데이터[i][0] && 새데이터[i][0] === 행데이터) {
-              새데이터[i][0] *= 2;
-              var 현점수 = parseInt(점수표.textContent, 10);
-              점수표.textContent = 현점수 + 새데이터[i][0];
-            } else {
-              새데이터[i].push(행데이터);
-            }
-          }
-        });
-      });
-      console.log(새데이터);
-      [1, 2, 3, 4].forEach(function (열데이터, i) {
-        [1, 2, 3, 4].forEach(function (행데이터, j) {
-          데이터[i][j] = 새데이터[i][j] || 0;
-        });
-      });
-      console.log(데이터);
-
-      break;
-    case "오른쪽":
       var 새데이터 = [[], [], [], []];
       데이터.forEach(function (열데이터, i) {
         열데이터.forEach(function (행데이터, j) {
@@ -133,20 +108,44 @@ window.addEventListener("mouseup", function (이벤트) {
               새데이터[i][새데이터[i].length - 1] &&
               새데이터[i][새데이터[i].length - 1] === 행데이터
             ) {
+              //행데이터는 push로 뒤에서부터 들어옴. 새데이터[i]의 0번째,1번째2번째 요소..
               새데이터[i][새데이터[i].length - 1] *= 2;
+              var 현점수 = parseInt(점수표.textContent, 10);
+              점수표.textContent = 현점수 + 새데이터[i][0];
             } else {
-              새데이터[i].push(행데이터);
+              새데이터[i].push(행데이터); //행은 그대로, 열데이터 인덱스만 감소해야 왼쪽으로 이동함.
             }
           }
         });
       });
-      console.log(새데이터);
+
+      [1, 2, 3, 4].forEach(function (열데이터, i) {
+        [1, 2, 3, 4].forEach(function (행데이터, j) {
+          데이터[i][j] = 새데이터[i][j] || 0; // 왼쪽 정렬하려면 행그대로, 열은 왼쪽에서부터 데이터가 0번째-1번째 이렇게 쌓여야한다.
+        });
+      });
+
+      break;
+    case "오른쪽": //오른쪽도 왼쪽과 마찬가지로 줄고정. 다만 행데이터가 unshift로 새데이터의 앞쪽부터 들어오고,
+      var 새데이터 = [[], [], [], []];
+      데이터.forEach(function (열데이터, i) {
+        열데이터.forEach(function (행데이터, j) {
+          console.log(행데이터);
+          if (행데이터) {
+            if (새데이터[i][0] && 새데이터[i][0] === 행데이터) {
+              새데이터[i][0] *= 2;
+            } else {
+              새데이터[i].unshift(행데이터);
+            }
+          }
+        });
+      });
+
       [1, 2, 3, 4].forEach(function (열데이터, i) {
         [1, 2, 3, 4].forEach(function (행데이터, j) {
           데이터[i][3 - j] = 새데이터[i][j] || 0;
         });
       });
-      console.log(데이터);
 
       break;
     case "위":
@@ -160,30 +159,20 @@ window.addEventListener("mouseup", function (이벤트) {
               새데이터[j][새데이터[j].length - 1] === 행데이터
             ) {
               새데이터[j][새데이터[j].length - 1] *= 2;
+              var 현점수 = parseInt(점수표.textContent, 10);
+              점수표.textContent = 현점수 + 새데이터[j][새데이터[j].length - 1];
             } else {
-              새데이터[j].unshift(행데이터);
+              새데이터[j].push(행데이터);
             }
           }
         });
       });
-      console.log(새데이터);
-      /*
-      새데이터.forEach(function (행데이터, i) {
-        //질문 : '행데이터'매개변수는 위에서 데이터칸을 받은 '행데이터'와는 다른 건지? /다른듯. 여기서는 데이터줄을 받아줌.
-        행데이터.forEach(function (열데이터, j) {
-          if (열데이터) {
-            데이터[j][i] = 열데이터;
-          } else {
-            데이터[j][i] = 0;
-          }
-        });
-      });*/
+
       [1, 2, 3, 4].forEach(function (행데이터, i) {
         [1, 2, 3, 4].forEach(function (열데이터, j) {
           데이터[j][i] = 새데이터[i][j] || 0;
         });
       });
-      console.log(데이터);
 
       break;
     case "아래":
@@ -191,27 +180,27 @@ window.addEventListener("mouseup", function (이벤트) {
       데이터.forEach(function (열데이터, i) {
         열데이터.forEach(function (행데이터, j) {
           if (행데이터) {
-            if (
-              새데이터[j][새데이터[j].length - 1] &&
-              새데이터[j][새데이터[j].length - 1] === 행데이터
-            ) {
-              새데이터[j][새데이터[j].length - 1] *= 2;
+            if (새데이터[j][0] && 새데이터[j][0] === 행데이터) {
+              새데이터[j][0] *= 2;
             } else {
+              var 현점수 = parseInt(점수표.textContent, 10);
+              점수표.textContent = 현점수 + 새데이터[j][새데이터[j].length - 1];
               새데이터[j].unshift(행데이터);
             }
           }
         });
       });
-      console.log(새데이터);
+
       [1, 2, 3, 4].forEach(function (행데이터, i) {
         [1, 2, 3, 4].forEach(function (열데이터, j) {
           데이터[3 - j][i] = 새데이터[i][j] || 0;
         });
       });
-      console.log(데이터);
 
       break;
   }
   그리기();
+  console.log(새데이터);
+  console.log(데이터);
   랜덤생성();
 });
