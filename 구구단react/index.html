@@ -16,68 +16,47 @@
   <body>
     <div id="root"></div>
     <script type="text/babel">
-      class GUGUDAN extends React.Component {
-        state = {
-          num1: Math.ceil(Math.random() * 9),
-          num2: Math.ceil(Math.random() * 9),
-          value: "",
-          result: "",
-        };
+      const GUGUDNA = () => {
+        const [num1, setNum1] = React.useState(Math.ceil(Math.random() * 9));
+        const [num2, setNum2] = React.useState(Math.ceil(Math.random() * 9));
+        const [value, setValue] = React.useState("");
+        const [result, setResult] = React.useState("");
+        const inputRef = React.useRef();
 
-        OnChange = (e) => {
-          //메소드를 따로 빼내었을 때에는 무조건 화살표함수로. function으로 하면 this가 달라짐.
-          this.setState({
-            value: e.target.value,
-          });
-        };
-        OnSubmit = (e) => {
+        const OnSubmit = (e) => {
           e.preventDefault();
-          if (
-            parseInt(this.state.value) ===
-            this.state.num1 * this.state.num2
-          ) {
-            this.setState((prevState) => {
-              return {
-                //'바꾸기 전 상태값'을 다음상태값에 활용하기 위해서 다음상태 return 하는 함수
-                result: "정답" + prevState.value,
-                num1: Math.ceil(Math.random() * 9),
-                num2: Math.ceil(Math.random() * 9),
-                value: "", //화면이 아니라 데이터 바꿔주는것. 데이터 바뀌면 화면 알아서 바뀜.
-              };
-            });
+          if (parseInt(value) === num1 * num2) {
+            setResult("정답: " + value);
+            setNum1(Math.ceil(Math.random() * 9));
+            setNum2(Math.ceil(Math.random() * 9));
+            setValue("");
+            setResult("");
+            inputRef.current.focus();
           } else {
-            this.setState({
-              result: "땡",
-              value: "",
-            });
-            this.input.focus(); //아래 'input' 에 넣어진 input 돔 선택해서 포커스.
+            setResult("땡");
+            inputRef.current.focus();
           }
         };
-        input; // ref통해 input값이 이 변수에 저장됨. (input말고 다른 변수명도 가능.)
-        onRefInput = (c) => {
-          this.input = c;
+        const OnChange = (e) => {
+          setValue(e.target.value);
         };
-        render() {
-          console.log("렌더링"); //setState할 때에는 render함수가 실행된다.
-          return (
-            <React.Fragment>
-              <div>
-                {this.state.num1}곱하기{this.state.num2}은?
-              </div>
-              <form onSubmit={this.OnSubmit}>
-                <input
-                  type="number"
-                  ref={this.onRefInput}
-                  value={this.state.value}
-                  onChange={this.OnChange}
-                />
-                <button>입력!</button>
-                <div id="result">{this.state.result}</div>
-              </form>
-            </React.Fragment>
-          );
-        }
-      }
+        return (
+          <React.Fragment>
+            <div>
+              {num1}+'곱하기'+{num2}'는?'
+            </div>
+            <form onSubmit={OnSubmit}>
+              <input
+                ref={inputRef}
+                type="number"
+                onChange={OnChange}
+                value={value}
+              />
+            </form>
+            <div>{result}</div>
+          </React.Fragment>
+        );
+      };
     </script>
     <script type="text/babel">
       ReactDOM.render(<GUGUDAN />, document.querySelector("#root"));
