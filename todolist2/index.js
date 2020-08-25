@@ -4,7 +4,6 @@ const toDoList = document.querySelector(".js-toDoList");
 let revise = false;
 let ID = [];
 let targetId;
-let revToDoTxt = false;
 let toDos = [];
 
 const TODOS_LS = "todos";
