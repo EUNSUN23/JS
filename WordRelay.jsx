@@ -1,13 +1,62 @@
-const React = require("react"); //컴포넌트 분리할땐 쓰이는 파일 불러오기. 여기서는 react 불러온것.
-const { Component } = React; // extends React.Component -> extends Component
+const React = require("react");
+const { Component } = React;
 
 class WordRelay extends Component {
   state = {
-    text: "hello webpack",
+    text: "은선",
+    value: "",
+    result: "",
+  };
+
+  onChange = (e) => {
+    this.setState({ value: e.target.value });
+  };
+
+  onSubmit = (e) => {
+    const word = this.state.text;
+    const answer = this.state.value;
+    e.preventDefault();
+    if (answer[0] === word[word.length - 1]) {
+      this.setState((prevState) => {
+        return {
+          result: "정답!",
+          text: prevState.value,
+          value: "",
+        };
+      });
+      this.input.focus();
+    } else {
+      this.setState({
+        result: "땡!",
+        value: "",
+      });
+      this.input.focus;
+    }
+  };
+
+  input;
+
+  onRefInput = (c) => {
+    this.input = c;
   };
   render() {
-    return <h1>{this.state.text}</h1>;
+    return (
+      <>
+        <div>{this.state.text}</div>
+        <form onSubmit={this.onSubmit}>
+          <label htmlFor="wordInput">글자를 입력하세요</label>
+          <input
+            className="wordInput"
+            ref={this.onRefInput}
+            type="text"
+            value={this.state.value}
+            onChange={this.onChange}
+          />
+        </form>
+        <div>{this.state.result}</div>
+      </>
+    );
   }
 }
 
-module.exports = WordRelay; //쪼갠 파일에서 필요한 부분3. 1,2 는 맨 위 두줄
+module.exports = WordRelay;
